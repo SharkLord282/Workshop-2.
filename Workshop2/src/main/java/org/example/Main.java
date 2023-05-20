@@ -24,6 +24,10 @@ public class Main {
                     System.out.println("Podaj Id");
                     readuser(scanner.nextInt());
                     break;
+                case "update":
+                    System.out.println("Podaj Nazwę, email, hasło, id");
+                    updateeuser(scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextInt());
+                    break;
                 default:
                     System.out.println("Wybierz poprawne zadanie");
             }
@@ -33,7 +37,7 @@ public class Main {
 
 
     }
-    static final String[] tasks = {"create","read", "exit"};
+    static final String[] tasks = {"create","read","update", "exit"};
     public static void printtasks(String[] tab) {
         System.out.println("wybierz zadanie:");
         for (String task : tab) {
@@ -57,5 +61,15 @@ public class Main {
         user.setEmail(emai);
         user.setPassword(password);
         userDao.create(user);
+    }
+
+    public static void updateeuser(String username, String emai, String password, int id) {
+        UserDao userDao = new UserDao();
+        User user = new User();
+        user.setUserName(username);
+        user.setEmail(emai);
+        user.setPassword(password);
+        user.setId(id);
+        userDao.update(user);
     }
 }

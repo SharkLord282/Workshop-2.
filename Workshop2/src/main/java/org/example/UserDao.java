@@ -48,5 +48,20 @@ public class UserDao {
             return null;
         }
     }
+
+    private static final String UPDATE_USER = "UPDATE users set username = (?), email = (?), password = (?) WHERE id = (?);";
+    public void update(User user) {
+        try (Connection conn = DbUtil.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(UPDATE_USER);
+            statement.setString(1, user.getUserName());
+            statement.setString(2, user.getEmail());
+            statement.setString(3, hashPassword(user.getPassword()));
+            statement.setInt(4, user.getId());
+            statement.executeUpdate();
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+    }
 }
 
