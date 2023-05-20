@@ -6,35 +6,35 @@ private static String userName;
 private static String email;
 private static String password;
 
-    public static void setId(int id) {
+    public  void setId(int id) {
         User.id = id;
     }
 
-    public static void setUserName(String userName) {
+    public  void setUserName(String userName) {
         User.userName = userName;
     }
 
-    public static void setEmail(String email) {
+    public  void setEmail(String email) {
         User.email = email;
     }
 
-    public static void setPassword(String password) {
+    public  void setPassword(String password) {
         User.password = password;
     }
 
-    public static int getId() {
+    public  int getId() {
         return id;
     }
 
-    public static String getUserName() {
+    public  String getUserName() {
         return userName;
     }
 
-    public static String getEmail() {
+    public  String getEmail() {
         return email;
     }
 
-    public static String getPassword() {
+    public String getPassword() {
         return password;
     }
 }

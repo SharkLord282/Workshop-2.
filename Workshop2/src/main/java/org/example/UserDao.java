@@ -2,10 +2,8 @@ package org.example;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.Arrays;
 
 public class UserDao {
     private static final String CREATE_USER_QERY = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
@@ -28,6 +26,23 @@ public class UserDao {
         return BCrypt.hashpw(passwor, BCrypt.gensalt());
     }
 
-
+    private static final String READ_USER_QERY = "SELECT * FROM users WHERE id = (?);";
+    public static User read(int userId) {
+        try (Connection conn = DbUtil.getConnection()) {
+            PreparedStatement statement = conn.prepareStatement(READ_USER_QERY);
+            statement.setInt(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setUserName(resultSet.getString("username"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+            return user;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 }
 
