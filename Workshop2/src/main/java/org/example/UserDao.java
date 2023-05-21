@@ -75,5 +75,37 @@ public class UserDao {
            ex.printStackTrace();
        }
     }
+
+    private static final String FIND_ALL = "SELECT * FROM users ";
+
+
+    public User[] findALL(String comand) {
+        try (Connection conn = DbUtil.getConnection()) {
+            User[] users = new User[0];
+           Statement staytment = conn.createStatement();
+           ResultSet resultSet = staytment.executeQuery(FIND_ALL + comand);
+            while (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setEmail(resultSet.getString("email"));
+                user.setUserName(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                users = addToArray(user, users);
+            }
+
+
+
+            return users;
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    private User[] addToArray(User user, User[] usersList) {
+        User[] tempUsers = Arrays.copyOf(usersList, usersList.length +1);
+        tempUsers[tempUsers.length -1] = user;
+        return tempUsers;
+    }
 }
 

@@ -9,8 +9,8 @@ public class Main {
     public static void main(String[] args) {
         printtasks(tasks);
         Scanner scanner = new Scanner(System.in);
-
         while (scanner.hasNextLine()) {
+
             String input = scanner.nextLine();
             switch (input) {
                 case "exit":
@@ -31,17 +31,23 @@ public class Main {
                 case "delete":
                     System.out.println("podaj Id");
                     deleteUser(scanner.nextInt());
-                        break;
+                    break;
+                case "findall":
+                    System.out.println("Dokończ komendę SELECT * FROM users , lub kliknij ENTER by wyświetlić wszystkie wyniki");
+                    findAllUsers(scanner.nextLine());
+                    break;
                 default:
                     System.out.println("Wybierz poprawne zadanie");
             }
-
+            printtasks(tasks);
+            input = scanner.nextLine();
         }
 
 
 
+
     }
-    static final String[] tasks = {"create","read","update","delete",  "exit"};
+    static final String[] tasks = {"create","read","update","delete", "findall",  "exit"};
     public static void printtasks(String[] tab) {
         System.out.println("wybierz zadanie:");
         for (String task : tab) {
@@ -80,6 +86,16 @@ public class Main {
     public static void deleteUser(int userId) {
         UserDao userDao = new UserDao();
         userDao.deleteUser(userId);
+    }
+
+    public  static void findAllUsers(String comand) {
+      UserDao userDao = new UserDao();
+      User[] all = userDao.findALL(comand);
+      for (User u : all){
+          System.out.println(u);
+      }
+
+
     }
 
 }
