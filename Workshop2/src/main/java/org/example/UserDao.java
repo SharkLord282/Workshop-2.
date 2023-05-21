@@ -63,5 +63,17 @@ public class UserDao {
         }
 
     }
+
+    private static final String DELETE_USER = "DELETE from users WHERE id =(?);";
+
+    public void deleteUser(int userid) {
+       try (Connection conn = DbUtil.getConnection()) {
+           PreparedStatement statement = conn.prepareStatement(DELETE_USER);
+           statement.setInt(1,userid);
+           statement.executeUpdate();
+       } catch (SQLException ex) {
+           ex.printStackTrace();
+       }
+    }
 }
 

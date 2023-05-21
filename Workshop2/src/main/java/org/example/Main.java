@@ -28,16 +28,20 @@ public class Main {
                     System.out.println("Podaj Nazwę, email, hasło, id");
                     updateeuser(scanner.nextLine(),scanner.nextLine(),scanner.nextLine(),scanner.nextInt());
                     break;
+                case "delete":
+                    System.out.println("podaj Id");
+                    deleteUser(scanner.nextInt());
+                        break;
                 default:
                     System.out.println("Wybierz poprawne zadanie");
             }
-            printtasks(tasks);
+
         }
 
 
 
     }
-    static final String[] tasks = {"create","read","update", "exit"};
+    static final String[] tasks = {"create","read","update","delete",  "exit"};
     public static void printtasks(String[] tab) {
         System.out.println("wybierz zadanie:");
         for (String task : tab) {
@@ -72,4 +76,10 @@ public class Main {
         user.setId(id);
         userDao.update(user);
     }
+
+    public static void deleteUser(int userId) {
+        UserDao userDao = new UserDao();
+        userDao.deleteUser(userId);
+    }
+
 }
